@@ -1,1 +1,3 @@
-# food
+# What to Eat ...
+
+This site is a little project with using HTML, CSS, and Javascript to build an interactive but still front-end only website. Check it out and let me know if you see any bugs or potential design improvements.
