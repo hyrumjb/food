@@ -158,9 +158,18 @@ b {
     color: rgb(250, 150, 150)
 }
 
+span.minus,
+span.plus {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+}
+
 .icon {
     width: 3rem;
     cursor: pointer;
+    display: block;
 }
 
 i {
