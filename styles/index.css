@@ -26,21 +26,28 @@ footer a:visited {
 }
 
 header {
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     height: 25vh;
     background-image: url(../images/background.jpg);
-    background-size: contain;
-    background-position: bottom right;
-    background-attachment: fixed;
+    background-size: cover;
+    background-position: 50% 90%;
+    background-attachment: scroll;
+    background-repeat: no-repeat;
 }
 
 h1 {
-    font-size: 16em;
+    font-size: 16vh;
+    line-height: 0.7;
     padding: 0;
-    margin: -2rem -0.2rem -24rem;
+    margin: 0;
+    max-width: 100%;
     font-family: "Bebas Neue", Arial, Helvetica, sans-serif;
-    border: hidden;
-    color: rgba(255, 255, 255, 0.8);
+    border: none;
+    color: rgba(255, 255, 255, 0.9);
+    word-wrap: break-word;
+    text-align: center;
 }
 
 nav a {
@@ -111,7 +118,7 @@ b {
 }
 
 .item {
-    flex-basis: 30vw;
+    flex-basis: clamp(300px, 30vw, 400px);
     height: 100px;
     margin: 0;
     display: flex;
@@ -129,7 +136,7 @@ b {
 }
 
 .label {
-    font-size: 1.4em;
+    font-size: 1.1em;
     max-width: 12vw;
     text-align: center;
 }
@@ -143,7 +150,7 @@ b {
 }
 
 .plus {
-    margin-right: 1em;
+    margin-right: 2em;
 }
 
 .plus:hover {
@@ -151,7 +158,7 @@ b {
 }
 
 .minus {
-    margin-left: 1em;
+    margin-left: 2em;
 }
 
 .minus:hover {
@@ -238,6 +245,48 @@ i {
 
 @media (max-width: 800px) {
     .flex-container {
-        flex-direction: column;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        flex: 1;
+        padding: 0;
+        gap: 0 1em;
+    }
+    
+    .item {
+        flex-basis: clamp(190px, 30vw, 400px);
+        height: 100px;
+        margin: 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: rgba(190, 190, 190, 0.5);
+        border: 6px solid rgba(160, 160, 160, 0.5);
+        border-radius: 45px;
+        padding: 0;
+    }
+    
+    .label {
+        display: flex;
+        font-size: 1em;
+        max-width: 12vw;
+        justify-content: center;
+        text-align: center;
+        padding: 5px 10px;
+    }
+
+    .plus {
+        margin-right: 0.7em;
+    }
+    
+    .minus {
+        margin-left: 0.7em;
+    }
+
+    .icon {
+        width: 2rem;
+        cursor: pointer;
+        display: block;
     }
 }
