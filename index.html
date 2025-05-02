@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="food, diet, health, paleo, keto">
+    <meta name="description" content="Want to learn what diet you actually eat and what its effects are? Check us out!">
+    <link rel="stylesheet" href="styles/index.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <title>Food Trip</title>
+</head>
+
+<body>
+    <header id="fat">
+        <h1>FOOD TRIP</h1>
+    </header>
+
+    <nav>
+        <a id="show-instructions">Instructions</a>
+        <a href="https://hyrumbradshaw.com">About</a>
+        <a id="reset">Reset</a>
+    </nav>
+
+    <main>
+        <div id="instructions-box" class="hidden">
+            <span id="close-instructions">&times;</span>
+            <div class="instructions-content">
+                <h2>Instructions</h2>
+                <p>Here's how to use the food analyzer ...</p>
+                <p>Basically, for each food category, select whether or not, in an average three-day period, you eat that item.</p>
+                <p>Then AI will analyze for you approximately what type of diet you have, as well as possible strengths
+                    of your diet, risks, and its recommendation for the best diet.
+                </p>
+                <p><i>Powered by ChatGPT</i></p>
+            </div>
+        </div>
+
+        <div id="done-box" class="hidden">
+            <span id="close-done">&times;</span>
+            <div class="instructions-content">
+                <h2>You are a ...</h2>
+                <p>What this means ...</p>
+            </div>
+        </div>
+
+        <div class="flex-container">
+            <div class="item" id="meat">
+                <span class="minus"><img src="images/minus.svg" alt="Minus" class="icon"></span>
+                <span class="label">Meat</span>
+                <span class="plus"><img src="images/plus.svg" alt="Plus" class="icon"></span>
+            </div>
+            <div class="item" id="fish">
+                <span class="minus"><img src="images/minus.svg" alt="Minus" class="icon"></span>
+                <span class="label">Fish</span>
+                <span class="plus"><img src="images/plus.svg" alt="Plus" class="icon"></span>
+            </div>
+            <div class="item" id="dairy">
+                <span class="minus"><img src="images/minus.svg" alt="Minus" class="icon"></span>
+                <span class="label">Dairy & Eggs</span>
+                <span class="plus"><img src="images/plus.svg" alt="Plus" class="icon"></span>
+            </div>
+            <div class="item" id="fats">
+                <span class="minus"><img src="images/minus.svg" alt="Minus" class="icon"></span>
+                <span class="label">Fats (Oils, Nuts)</span>
+                <span class="plus"><img src="images/plus.svg" alt="Plus" class="icon"></span>
+            </div>
+            <div class="item" id="fruits">
+                <span class="minus"><img src="images/minus.svg" alt="Minus" class="icon"></span>
+                <span class="label">Fruits & Veggies</span>
+                <span class="plus"><img src="images/plus.svg" alt="Plus" class="icon"></span>
+            </div>
+            <div class="item" id="grains">
+                <span class="minus"><img src="images/minus.svg" alt="Minus" class="icon"></span>
+                <span class="label">Whole Grains</span>
+                <span class="plus"><img src="images/plus.svg" alt="Plus" class="icon"></span>
+            </div>
+            <div class="item" id="junk">
+                <span class="minus"><img src="images/minus.svg" alt="Minus" class="icon"></span>
+                <span class="label">Processed Food</span>
+                <span class="plus"><img src="images/plus.svg" alt="Plus" class="icon"></span>
+            </div>
+        </div>
+
+        <script>
+            document.querySelectorAll('.item').forEach(item => {
+                const plus = item.querySelector('.plus');
+                const minus = item.querySelector('.minus');
+
+                plus.addEventListener('click', () => {
+                    item.classList.add('active');
+                    item.classList.remove('inactive');
+                    checkIfAllItemsSelected();
+                });
+
+                minus.addEventListener('click', () => {
+                    item.classList.add('inactive');
+                    item.classList.remove('active');
+                    checkIfAllItemsSelected();
+                });
+            });
+
+            document.getElementById('reset').addEventListener('click', () => {
+                document.querySelectorAll('.item').forEach(item => {
+                    item.classList.remove('active');
+                    item.classList.remove('inactive');
+                });
+            });
+
+            document.getElementById('show-instructions').addEventListener('click', () => {
+                document.getElementById('instructions-box').classList.remove('hidden');
+            });
+
+            document.getElementById('close-instructions').addEventListener('click', () => {
+                document.getElementById('instructions-box').classList.add('hidden');
+            });
+
+            document.getElementById('close-done').addEventListener('click', () => {
+                document.getElementById('done-box').classList.add('hidden');
+            });
+
+            function checkIfAllItemsSelected() {
+                const items = document.querySelectorAll('.item');
+                const allSelected = Array.from(items).every(item =>
+                    item.classList.contains('active') || item.classList.contains('inactive')
+                );
+                if (allSelected) {
+                    document.getElementById('done-box').classList.remove('hidden');
+                }
+            }
+        </script>
+    </main>
+
+    <footer>
+        <b id="leftie">Site by Hyrum</b>
+        <b id="rightie"><a href="https://www.hyrumbradshaw.com">hyrumbradshaw.com</a></b>
+    </footer>
+</body>
+
+</html>
