@@ -34,15 +34,13 @@
                 <p>Then AI will analyze for you approximately what type of diet you have, as well as possible strengths
                     of your diet, risks, and its recommendation for the best diet.
                 </p>
-                <p><i>Powered by ChatGPT</i></p>
+                <p><i>Powered by OpenAI</i></p>
             </div>
         </div>
 
         <div id="done-box" class="hidden">
             <span id="close-done">&times;</span>
             <div class="instructions-content">
-                <h2>You are a ...</h2>
-                <p>What this means ...</p>
             </div>
         </div>
 
@@ -127,7 +125,126 @@
                     item.classList.contains('active') || item.classList.contains('inactive')
                 );
                 if (allSelected) {
-                    document.getElementById('done-box').classList.remove('hidden');
+                    const activeIds = [];
+                    const inactiveIds = [];
+
+                    items.forEach(item => {
+                        if (item.classList.contains('active')) {
+                            activeIds.push(item.id);
+                        } else if (item.classList.contains('inactive')) {
+                            inactiveIds.push(item.id);
+                        }
+                    });
+
+                    let message = 'Waiting on ChatGPT . . .';
+                    let benefits = 'Waiting on ChatGPT . . .';
+                    let risks = 'Waiting on ChatGPT . . .';
+                    let grade = '?';
+
+                    const eats = (id) => activeIds.includes(id);
+                    const avoids = (id) => inactiveIds.includes(id);
+
+                    if (
+                        eats('meat') && eats('fish') && eats('dairy') &&
+                        eats('fats') && eats('fruits') && eats('grains') &&
+                        eats('junk')
+                    ) {
+                        message = "You're on a standard Western diet.";
+                        benefits = "High in variety and energy; provides most essential nutrients if well-balanced.";
+                        risks = "High intake of processed foods, saturated fats, and added sugars increases risk of obesity, heart disease, and diabetes.";
+                        grade = "C";
+                    } else if (
+                        avoids('meat') && avoids('fish') && avoids('dairy') &&
+                        eats('fats') && eats('fruits') && eats('grains') &&
+                        avoids('junk')
+                    ) {
+                        message = "You're eating a whole-food plant-based diet.";
+                        benefits = "Excellent for heart health, digestion, and long-term disease prevention.";
+                        risks = "Possible deficiencies in B12, omega-3s, calcium, and iron if not supplemented or balanced.";
+                        grade = "A+";
+                    } else if (
+                        avoids('meat') && avoids('fish') && eats('fruits') &&
+                        eats('grains') && avoids('junk')
+                    ) {
+                        message = "You're vegetarian.";
+                        benefits = "Can lower risk of chronic diseases and support healthy weight.";
+                        risks = "May need to monitor protein, B12, and iron intake depending on variety.";
+                        grade = "A";
+                    } else if (
+                        avoids('meat') && eats('fish') &&
+                        eats('dairy') && eats('fats') && eats('fruits') &&
+                        eats('grains') && avoids('junk')
+                    ) {
+                        message = "You're pescatarian.";
+                        benefits = "High in omega-3s, healthy fats, and antioxidants.";
+                        risks = "May over-rely on fish for protein; potential exposure to mercury depending on fish sources.";
+                        grade = "A";
+                    } else if (
+                        eats('meat') && avoids('grains') && avoids('junk') &&
+                        eats('dairy') && eats('fats') &&
+                        avoids('fruits')
+                    ) {
+                        message = "You're likely on a keto or very low-carb diet (like the Atkins diet).";
+                        benefits = "Can support weight loss and reduce blood sugar spikes.";
+                        risks = "Often low in fiber, vitamins, and antioxidants; may affect cholesterol and gut health.";
+                        grade = "B-";
+                    } else if (
+                        eats('meat') && eats('fish') &&
+                        eats('fats') && eats('fruits') &&
+                        avoids('grains') && avoids('dairy') && avoids('junk')
+                    ) {
+                        message = "You're following a paleo-style diet.";
+                        benefits = "Encourages whole, unprocessed foods and lean proteins.";
+                        risks = "Excludes legumes and grains, which are beneficial for many; can be restrictive and expensive.";
+                        grade = "B";
+                    } else if (
+                        eats('fish') && avoids('meat') &&
+                        eats('fats') && eats('fruits') &&
+                        eats('grains') && eats('dairy') &&
+                        avoids('junk')
+                    ) {
+                        message = "You're following a Mediterranean-style diet.";
+                        benefits = "Well-studied for heart health, longevity, and mental well-being.";
+                        risks = "Very low risk; may not work for people with certain dietary restrictions (e.g. gluten, lactose).";
+                        grade = "A+";
+                    } else if (
+                        eats('meat') && eats('fish') &&
+                        avoids('fruits') && avoids('grains') &&
+                        eats('dairy') && eats('junk') &&
+                        eats('fats')
+                    ) {
+                        message = "You're mostly eating an animal-based or convenience-heavy diet.";
+                        benefits = "High in protein and calories; good short-term energy.";
+                        risks = "Lacks fiber, antioxidants, and plant diversity; may increase inflammation and long-term disease risk.";
+                        grade = "D";
+                    } else if (
+                        eats('junk') && avoids('fruits') &&
+                        avoids('grains') && avoids('fats') &&
+                        avoids('meat') && avoids('fish') &&
+                        avoids('dairy')
+                    ) {
+                        message = "You're eating mostly processed foods.";
+                        benefits = "Cheap and convenient.";
+                        risks = "Extremely nutrient-poor; high risk of metabolic issues, digestive problems, and chronic illness.";
+                        grade = "F";
+                    } else {
+                        message = "You're eating a mixed or unclassifiable diet.";
+                        benefits = "Some dietary diversity can support nutrient coverage.";
+                        risks = "May lack structure or balance; watch for overuse of processed or nutrient-poor foods.";
+                        grade = "B-";
+                    }
+
+                    const doneBox = document.getElementById('done-box');
+                    doneBox.querySelector('.instructions-content').innerHTML = `
+                        <h2>Your Diet Result</h2>
+                        <p>${message}</p>
+                        <h3>Benefits:</h3>
+                        <p>${benefits}</p>
+                        <h3>Risks:</h3>
+                        <p>${risks}</p>
+                        <h3 style="display: inline;">Grade:</h3> <span class="grade"><strong>→ ${grade}</strong></span>
+                    `;
+                    doneBox.classList.remove('hidden');
                 }
             }
         </script>

@@ -221,6 +221,12 @@ i {
     cursor: pointer;
 }
 
+.grade {
+    color: green;
+    font-size: 20px;
+    display: inline;
+}
+
 @media (max-width: 800px) {
     .flex-container {
         flex-direction: column;
