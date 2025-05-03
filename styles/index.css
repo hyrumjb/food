@@ -39,7 +39,7 @@ header {
 
 h1 {
     font-size: 16vh;
-    line-height: 1;
+    line-height: 0.75;
     padding: 0;
     margin: 0;
     max-width: 100%;
@@ -258,6 +258,8 @@ i {
         flex: 1;
         padding: 0;
         gap: 0 0.5em;
+        margin-top: 1em;
+        margin-bottom: 1em;
     }
     
     .item {
